@@ -1,0 +1,628 @@
+You are given an array arr in increasing order. Find the element x from arr
+using binary search.
+Example 1: arr={ 1,5,6,7,9,10},X=6
+Output : Element found at location
+2 Example 2: arr={ 
+1,5,6,7,9,10},X=11
+Output : Element not found at location 2
+#include <stdio.h>
+int main() {
+    int arr[] = {1, 5, 6, 7, 9, 10};
+    int n = sizeof(arr) / sizeof(arr[0]);
+    int target = 6;
+    int found = 0;
+    int left = 0;
+    int right = n - 1;
+    int index = -1; 
+    while (left <= right) {
+        int mid = left + (right - left) / 2;
+        
+        if (arr[mid] == target) {
+            found = 1;
+            index = mid; 
+            break;
+        } else if (arr[mid] < target) {
+            left = mid + 1;
+        } else {
+            right = mid - 1;
+        }
+    }
+    if (found) {
+        printf("Element is found at index %d\n", index); 
+    } else {
+        printf("The element is not found\n");
+    }
+    return 0;
+}
+
+Write a program to sort the below numbers in descending order using
+bubble sort Input 4,7,9,1,2
+
+#include<stdio.h>
+int main()
+{
+    int x[5]={ 4,7,9,1,2};
+int i,j,temp;
+for(i=0;i<4;i++)
+{
+    for(j=0;j<(4-i);j++)
+    {
+        if(x[j]<x[j+1])
+        {
+            temp=x[j];
+            x[j]=x[j+1];
+            x[j+1]=temp;
+        }
+    }
+}
+printf("sorted array is");
+for(i=0;i<5;i++)
+{
+    printf(" %d ",x[i]);
+}
+return 0;
+}
+
+4.Given a number n. the task is to print the Fibonacci series and the sum of the
+series using recursion.
+input: n=10
+output: Fibonacci series
+0, 1, 1, 2, 3, 5, 8, 13, 21, 34
+Sum: 88
+
+#include<stdio.h>
+int fibonacci(int n)
+{
+    if(n==0)
+    {
+        return 0;
+    }
+    else if(n==1)
+    {
+        return 1;
+    }
+    else
+    {
+        return fibonacci(n-1)+fibonacci(n-2);
+    }
+}
+int fibonaccisum(int n)
+{
+  if(n==0)
+    {
+        return 0;
+    }
+    else if(n==1)
+    {
+        return 1;
+    }
+    else
+    {
+        return fibonacci(n)+fibonaccisum(n-1);  
+}
+}
+int main()
+{
+    int n=10;
+    int sum=0;
+    printf("fibonacci series is");
+    for(int i=0;i<n;i++)
+    {
+ printf("%d",fibonacci(i));
+ if(i<n-1)
+ {
+     printf(",");
+ }
+    }
+    printf("\n");
+    sum=fibonaccisum(n-1);
+    printf(" sum is %d",sum);
+    return 0;
+}
+
+Write a program to perform insert and delete operations in a
+queue Example : 12,34,56,78
+After insertion of 60 content of the queue is
+12,34,56,78,60 After deletion of 12 , the contents of the 
+queue : 34,56,78,60
+
+#include<stdio.h>
+#define N 7
+int queue[N];
+int rear=-1;
+int front=-1;
+void enqueue(int x)
+{
+    if(rear==N-1)
+    {
+        printf("overflow");
+    }
+    else if(front==-1&&rear==-1)
+    {
+        front=rear=0;
+        queue[rear]=x;
+    }
+    else
+    {
+        rear++;
+        queue[rear]=x;
+    }
+}
+void dequeue()
+{
+    if(front==-1&&rear==-1)
+    {
+        printf("underflow");
+    }
+    else if(front==rear)
+    {
+        printf("%d",queue[front]);
+        front=rear=-1;
+    }
+    else
+    {
+        front++;
+        printf("%d",queue[front]);
+    }
+}
+void display()
+{
+    int i;
+    if(front==-1&&rear==-1)
+    {
+        printf("queue is empty");
+    }
+    for(i=front;i<=rear;i++)
+    {
+        printf("%d",queue[i]);
+        printf("\n");
+    }
+}
+int main()
+{
+    enqueue(12);
+    enqueue(34);
+    enqueue(56);
+    enqueue(78);
+    printf("After initial insertions:\n");
+    display();
+    enqueue(60);
+    printf("After inserting 60:\n");
+    display();
+    dequeue();
+    printf("After deleting front element:\n");
+    display();
+    return 0;
+}
+
+Given the head of a singly linked list, return number of nodes present in
+a linked Example 1:
+1->2->3->5->8
+Output 5
+
+#include<stdio.h>
+#include<stdlib.h>
+struct Node
+{
+    int val;
+    struct Node *next;
+};
+struct Node* newnode(int val)
+{
+    struct Node* node=(struct Node*)malloc(sizeof(struct Node));
+    node->val=val;
+    node->next=NULL;
+    return node;
+}
+int countnodes(struct Node* head)
+{
+    int count=0;
+    struct Node* current=head;
+    while(current!=NULL)
+    {
+        count++;
+        current=current->next;
+    }
+    return count;
+}
+int main()
+{
+    struct Node*head=newnode(2);
+    head->next=newnode(4);
+    head->next->next=newnode(9);
+    head->next->next->next=newnode(6);
+    int numnodes=countnodes(head);
+    printf("the number of nodes in linked list is %d",numnodes);
+    return 0;
+}
+
+Given a string s, sort it in ascending order and find the starting index of repeated
+character Input: s = "tree"
+Output:"eert", starting index 0 
+Input: s = "kkj"
+Output:"jkk", starting index : 1
+
+
+#include <stdio.h>
+#include <string.h>
+int main() {
+    char s[] = "jkk";
+    int length = strlen(s);
+    for (int i = 0; i < length - 1; i++) {
+        for (int j = 0; j < length - i - 1; j++) {
+            if (s[j] > s[j + 1]) {
+                char temp = s[j];
+                s[j] = s[j + 1];
+                s[j + 1] = temp;
+            }
+        }
+    }
+    printf("Sorted string: %s\n", s);
+    for (int i = 1; i < length; i++) {
+        if (s[i] == s[i - 1]) {
+            printf("Starting index of the repeated character: %d\n", i - 1);
+            return 0; 
+        }
+    }
+    printf("No repeated characters found.\n");
+    return 0;
+}
+
+Given a string s, find the frequency of
+characters Example 1:
+Input: s = "tree"
+Output t->1, r->1, e-
+>2
+
+#include<stdio.h>
+#include<string.h>
+int main()
+{
+    char s[]="tree";
+    int len=strlen(s);
+    int i;
+    for(i=0;i<len;i++)
+    {
+        if(i>0 &&s[i]==s[i-1])
+        {
+            continue;
+        }
+        int count=1;
+        while(i+1<len&&s[i]==s[i+1])
+        {
+            count++;
+            i++;
+        }
+        printf("%c->%d\n",s[i],count);
+    }
+    return 0;
+}
+
+Write a program to create and display a
+linked list Example 1:
+Nodes : 6,7,8,9
+Output: 6->7->8->9
+
+#include<stdio.h>
+#include<stdlib.h>
+struct Node
+{
+    int val;
+    struct Node *next;
+};
+struct Node* newnode(int val)
+{
+    struct Node* node=(struct Node*)malloc(sizeof(struct Node));
+    node->val=val;
+    node->next=NULL;
+    return node;
+}
+void displayList(struct Node* head) {
+    struct Node* current = head;
+    while (current != NULL) {
+        printf("%d", current->val);
+        if (current->next != NULL) {
+            printf("->");
+        }
+        current = current->next;
+    }
+    printf("\n");
+}
+int main()
+{
+    struct Node*head=newnode(2);
+    head->next=newnode(4);
+    head->next->next=newnode(9);
+    head->next->next->next=newnode(6);
+     printf("Linked list: ");
+    displayList(head);
+    return 0;
+}
+
+Write a program to find odd number present in the data part of
+a node Example Linked List 1->2->3->7
+Output: 1,3,7
+
+#include<stdio.h>
+#include<stdlib.h>
+struct Node
+{
+    int val;
+    struct Node *next;
+};
+struct Node* newnode(int val)
+{
+    struct Node* node=(struct Node*)malloc(sizeof(struct Node));
+    node->val=val;
+    node->next=NULL;
+    return node;
+}
+void displayOddNodes(struct Node* head) {
+    struct Node* current = head;
+    int foundOdd = 0; // Flag to track if any odd number was found
+
+    while (current != NULL) {
+        if (current->val % 2 != 0) { // Check if the value is odd
+            printf("%d", current->val);
+            foundOdd = 1;
+            if (current->next != NULL && current->next->val % 2 != 0) {
+                printf(" ");
+            }
+        }
+        current = current->next;
+    }
+    
+    if (!foundOdd) {
+        printf("No odd numbers found");
+    }
+    printf("\n");
+}
+int main()
+{
+    struct Node*head=newnode(2);
+    head->next=newnode(1);
+    head->next->next=newnode(3);
+    head->next->next->next=newnode(7);
+        printf("Odd nodes are : ");
+    displayOddNodes(head);
+    return 0;
+}
+
+Given an array of size N-1 such that it only contains distinct
+integers in the range of 1 to N. Find the missing element.
+Input:
+N = 5
+A[] = {1,2,3,5}
+Output:4
+
+#include<stdio.h>
+int main()
+{
+    int N=5;
+    int A[]={1,3,5,4};
+    int total_sum=N*(N+1)/2;
+    int array_sum=0;
+    for(int i=0;i<N-1;i++)
+    {
+    array_sum+=A[i];
+    }
+   int missing_element=total_sum-array_sum;
+    printf(" missing element is %d ",missing_element);
+    return 0;
+}
+
+Given an unsorted array arr[] with both positive and negative elements,
+the task is to find the smallest positive number missing from the array.
+Input: arr[] = {2, 3, 7, 6, 8, -1, -10, 15}
+Output: 1
+
+#include <stdio.h>
+int main() {
+    int arr[] = {2, 3, 7, 6, 8, -1, -10, 15};
+    int size = sizeof(arr) / sizeof(arr[0]);
+    for (int i = 0; i < size; i++) {
+        while (arr[i] > 0 && arr[i] <= size && arr[i] != arr[arr[i] - 1]) {
+            int correctIndex = arr[i] - 1;
+            int temp = arr[i];
+            arr[i] = arr[correctIndex];
+            arr[correctIndex] = temp;
+        }
+    }
+    int missing = size + 1; 
+    for (int i = 0; i < size; i++) {
+        if (arr[i] != i + 1) {
+            missing = i + 1;
+            break;
+        }
+    }
+    printf("The smallest positive number missing is %d\n", missing);
+    return 0;
+}
+
+#include <stdio.h>
+#include <stdlib.h>
+
+// Definition for a binary tree node.
+typedef struct TreeNode {
+    int val;
+    struct TreeNode *left;
+    struct TreeNode *right;
+} TreeNode;
+
+// Function to create a new tree node
+TreeNode* createNode(int value) {
+    TreeNode* node = (TreeNode*)malloc(sizeof(TreeNode));
+    node->val = value;
+    node->left = NULL;
+    node->right = NULL;
+    return node;
+}
+
+// Function to find the index of a value in an array
+int findIndex(int arr[], int start, int end, int value) {
+    for (int i = start; i <= end; i++) {
+        if (arr[i] == value) {
+            return i;
+        }
+    }
+    return -1;
+}
+
+// Function to build the binary tree from preorder and inorder traversals
+TreeNode* buildTree(int* preorder, int* inorder, int inorderStart, int inorderEnd, int* preorderIndex, int size) {
+    // Base case
+    if (inorderStart > inorderEnd) {
+        return NULL;
+    }
+
+    // The first element in preorder is the root
+    int rootValue = preorder[*preorderIndex];
+    TreeNode* root = createNode(rootValue);
+    (*preorderIndex)++;
+
+    // Find the index of the root in inorder
+    int rootIndex = findIndex(inorder, inorderStart, inorderEnd, rootValue);
+
+    // Recursively build the left and right subtrees
+    root->left = buildTree(preorder, inorder, inorderStart, rootIndex - 1, preorderIndex, size);
+    root->right = buildTree(preorder, inorder, rootIndex + 1, inorderEnd, preorderIndex, size);
+
+    return root;
+}
+
+// Function to print tree in level-order traversal (for verification)
+void printLevelOrder(TreeNode* root) {
+    if (root == NULL) {
+        printf("null ");
+        return;
+    }
+    printf("%d ", root->val);
+    printLevelOrder(root->left);
+    printLevelOrder(root->right);
+}
+
+// Wrapper function to start building the tree
+TreeNode* buildBinaryTree(int* preorder, int* inorder, int size) {
+    int preorderIndex = 0;
+    return buildTree(preorder, inorder, 0, size - 1, &preorderIndex, size);
+}
+
+int main() {
+    int preorder[] = {3, 9, 20, 15, 7};
+    int inorder[] = {9, 3, 15, 20, 7};
+    int size = sizeof(preorder) / sizeof(preorder[0]);
+
+    TreeNode* root = buildBinaryTree(preorder, inorder, size);
+
+    printf("Tree in level-order: ");
+    printLevelOrder(root);
+    printf("\n");
+
+    return 0;
+}
+
+Given the root of a binary search tree and K as input, find Kth smallest element in 
+BST.
+For example, in the following BST,if k = 3, then the output should be
+10, 
+
+#include <stdio.h>
+#include <stdlib.h>
+struct TreeNode {
+    int val;
+    struct TreeNode *left;
+    struct TreeNode *right;
+};
+struct TreeNode* newTreeNode(int val) {
+    struct TreeNode* node = (struct TreeNode*)malloc(sizeof(struct TreeNode));
+    node->val = val;
+    node->left = NULL;
+    node->right = NULL;
+    return node;
+}
+int count = 0;
+int result = -1;
+void inorderTraversal(struct TreeNode* root, int k) {
+    if (root == NULL || count >= k) {
+        return;
+    }
+    inorderTraversal(root->left, k);
+    count++;
+    if (count == k) {
+        result = root->val;
+        return;
+    }
+    inorderTraversal(root->right, k);
+}
+int findKthSmallest(struct TreeNode* root, int k) {
+    count = 0; 
+    result = -1;
+    inorderTraversal(root, k);
+    return result;
+}
+int main() {
+    struct TreeNode* root = newTreeNode(20);
+    root->left = newTreeNode(8);
+    root->right = newTreeNode(22);
+    root->left->left = newTreeNode(4);
+    root->left->right = newTreeNode(12);
+    root->right->left = newTreeNode(10);
+    root->right->right = newTreeNode(14);
+   int k = 5;
+    printf("The %dth smallest element is: %d\n", k, findKthSmallest(root, k)); 
+    return 0;
+}
+
+Write a program to traverse the nodes present in the following tree in inorder and postorder traversal
+
+#include<stdio.h>
+#include<stdlib.h>
+struct Node
+{
+	int data;
+	struct Node *left;
+	struct Node *right;
+};
+struct Node *newnode(int data)
+{
+	struct Node* node=(struct Node*)malloc(sizeof(struct Node));
+	node->data=data;
+	node->left=NULL;
+	node->right=NULL;
+	return node;
+}
+void inorder(struct Node *root)
+{
+        if(root==0)
+        {
+            return;
+        }
+        inorder(root->left);
+        printf("%d",root->data);
+        inorder(root->right);
+}
+void postorder(struct Node *root)
+{
+        if(root==0)
+        {
+            return;
+        }
+        postorder(root->left);
+        postorder(root->right);
+        printf("%d",root->data);
+}
+int main()
+{
+    struct Node *root=newnode(3);
+    root->left=newnode(9);
+    root->right=newnode(20);
+    root->right->left=newnode(15);
+    root->right->right=newnode(7);
+    printf("inorder is:");
+     inorder(root);
+     printf("\n");
+    printf("postorder is:");
+    postorder(root);
+ 
+    return 0;
+}
